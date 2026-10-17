@@ -33,7 +33,7 @@ This checkout was rebuilt after the cloud workspace was replaced and the earlier
 
 ## Current verification
 
-- Final checks: 48 unit/database tests and 14 desktop/mobile browser tests passed. Lint, TypeScript checking, clean dependency installation, and production build passed. Details are recorded in `docs/VERIFICATION.md`.
+- Final checks: 48 unit/database tests and 16 desktop/mobile browser tests passed. Lint, TypeScript checking, clean dependency installation, and production build passed. Details are recorded in `docs/VERIFICATION.md`.
 - Database tests use the actual migration in PGlite; no live Supabase project was contacted.
 - Browser tests cover local persistence, prerequisites, notes, bookmarks, statuses, revisions, visualizer input errors/steps, route rendering, responsive widths, graph rendering and navigation.
 - This MVP does not run user-submitted code, verify external solutions, or offer a public competitive leaderboard.
