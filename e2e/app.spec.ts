@@ -144,3 +144,27 @@ test("initial target matches displayed controls and playback finishes", async ({
     page.getByRole("button", { name: "Pause", exact: true }),
   ).toBeVisible();
 });
+
+test("authentication routes and publishing metadata are available", async ({
+  page,
+  request,
+}) => {
+  for (const [path, title] of [
+    ["login", "Welcome back"],
+    ["signup", "Start your learning journey"],
+    ["reset-password", "Reset your password"],
+    ["update-password", "Choose a new password"],
+  ]) {
+    await page.goto(`/auth/${path}`);
+    await expect(page.getByRole("heading", { name: title })).toBeVisible();
+    await expect(page.getByText("Demo mode:", { exact: false })).toBeVisible();
+  }
+  expect((await request.get("/robots.txt")).ok()).toBe(true);
+  const sitemap = await request.get("/sitemap.xml");
+  expect(sitemap.ok()).toBe(true);
+  expect(await sitemap.text()).toContain("/learn/variables");
+  expect((await request.get("/opengraph-image")).ok()).toBe(true);
+  await page.goto("/learn/variables");
+  await expect(page.locator(".shiki")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Copy code" })).toBeVisible();
+});

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { CodeBlock } from "./code-block";
 import dynamic from "next/dynamic";
 const RoadmapGraph = dynamic(() => import("./roadmap-graph"), { ssr: false });
 import Link from "next/link";
@@ -182,9 +183,10 @@ export function Lesson({ slug }: { slug: string }) {
               ))}
             </select>
           </label>
-          <pre className="code-content">
-            {t.code_examples[state.preferences.language]}
-          </pre>
+          <CodeBlock
+            code={t.code_examples[state.preferences.language]}
+            language={state.preferences.language}
+          />
           <Notes id={t.id} />
           <button
             className="button primary"

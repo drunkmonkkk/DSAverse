@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import Link from "next/link";
 import {
   ResponsiveContainer,
@@ -21,7 +20,6 @@ import {
   reward,
   STORAGE_KEY,
 } from "@/lib/progress";
-import { browserSupabase, cloudConfigured } from "@/lib/supabase";
 export function Analytics() {
   const { state, ready } = useProgress();
   if (!ready) return <Loading />;
@@ -334,93 +332,5 @@ export function Profile() {
         </div>
       </div>
     </>
-  );
-}
-export function Auth() {
-  const [email, setEmail] = useState(""),
-    [password, setPassword] = useState(""),
-    [message, setMessage] = useState(""),
-    [busy, setBusy] = useState(false);
-  async function submit(signup: boolean) {
-    setBusy(true);
-    try {
-      const client = browserSupabase();
-      if (!client) throw Error("Cloud authentication is not configured.");
-      const { error } = signup
-        ? await client.auth.signUp({ email, password })
-        : await client.auth.signInWithPassword({ email, password });
-      if (error) throw error;
-      setMessage(
-        signup
-          ? "Check your email to confirm your account."
-          : "Signed in. Open your dashboard.",
-      );
-    } catch (e) {
-      setMessage((e as Error).message);
-    } finally {
-      setBusy(false);
-    }
-  }
-  return (
-    <div className="auth card pad">
-      <Heading
-        title="Welcome to DSAverse"
-        description="Learn locally, or sign in to a configured Supabase project."
-      />
-      {!cloudConfigured && (
-        <p className="callout">
-          Cloud authentication is not configured in this environment. Local
-          learning is available without an account.
-        </p>
-      )}
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          void submit(false);
-        }}
-      >
-        <label className="field">
-          Email
-          <input
-            required
-            type="email"
-            autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
-        <label className="field">
-          Password
-          <input
-            required
-            minLength={8}
-            type="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-        <div className="row wrap section">
-          <button
-            className="button primary"
-            disabled={!cloudConfigured || busy}
-          >
-            Sign in
-          </button>
-          <button
-            type="button"
-            className="button outline"
-            disabled={!cloudConfigured || busy || !email || password.length < 8}
-            onClick={() => void submit(true)}
-          >
-            Create account
-          </button>
-        </div>
-      </form>
-      <p role="status">{message}</p>
-      <Link href="/dashboard" className="text-link">
-        Continue to dashboard →
-      </Link>
-    </div>
   );
 }
