@@ -40,7 +40,7 @@ Browser tests run against a production build. They use `/usr/bin/chromium` when 
 
 1. Create a Supabase project. Apply `supabase/migrations/001_initial.sql` in its SQL editor or through your migration workflow.
 2. Copy `.env.example` to `.env.local`. Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` to the project's public URL and anon key. Never put a service-role key into a `NEXT_PUBLIC_*` variable.
-3. Configure Supabase Auth's Site URL to the application's deployment origin. Email confirmation can return to that origin; sign in with the confirmed email/password afterward. OAuth, password reset, and invitation flows are not implemented yet.
+3. Configure Supabase Auth's Site URL to the application's deployment origin. Email confirmation can return to that origin; sign in with the confirmed email/password afterward. OAuth and invitation flows are not implemented. Password reset and password update routes are available but need live verification.
 4. Restart development or rebuild production so Next.js picks up public environment variables. Test with two accounts: one user's saved progress must not appear for the other.
 5. Optionally seed the public catalog: `node --env-file=.env.local --import tsx scripts/seed.ts`. Set `SUPABASE_SERVICE_ROLE_KEY` only for this server-side command. The app currently reads its bundled catalog, so seeding is optional.
 
@@ -57,3 +57,23 @@ A self-hosted deployment can run `npm run build` followed by `npm run start` beh
 ## Cloud workspace recovery
 
 `scripts/setup.sh` contains the reusable installation command for `/workspace/DSAverse`. It installs dependencies only; it does not reconstruct source files from an empty remote repository. Preserve this source in your repository or retain the supplied source archive before replacing the environment. Background server processes must be restarted after a snapshot is restored.
+
+## Git and Vercel delivery
+
+GitHub Actions runs lint, type checking, unit/database tests, production build and browser tests on pushes to `main` and pull requests. It does not deploy: use Vercel's Git integration once connected to avoid duplicate deployments.
+
+In the authenticated Vercel account, import `drunkmonkkk/DSAverse`, name the project `dsaverse`, retain the repository root as Root Directory, choose Next.js and Node 24, and set Production Branch to `main`. Vercel's integration supplies production deployments for `main` and preview deployments for pull requests. The committed `vercel.json` sets the framework/install/build commands but cannot create the account-side Git integration.
+
+No environment variables are needed to deploy demo mode. Supabase variables are optional. `NEXT_PUBLIC_SITE_URL` can set the canonical origin; otherwise metadata uses Vercel's production domain environment variable. Set Supabase's allowed redirect URLs to `/auth/login` and `/auth/update-password` on the actual deployment origin when enabling authentication. Password recovery must begin with a fresh recovery email link.
+
+The CLI can be used after authorization in this workspace:
+
+```sh
+XDG_DATA_HOME=/tmp/dsaverse-vercel-data XDG_CACHE_HOME=/tmp/dsaverse-vercel-cache npx vercel login
+XDG_DATA_HOME=/tmp/dsaverse-vercel-data XDG_CACHE_HOME=/tmp/dsaverse-vercel-cache npx vercel link
+# Select your authorized account/team and project dsaverse.
+XDG_DATA_HOME=/tmp/dsaverse-vercel-data XDG_CACHE_HOME=/tmp/dsaverse-vercel-cache npx vercel git connect https://github.com/drunkmonkkk/DSAverse.git
+XDG_DATA_HOME=/tmp/dsaverse-vercel-data XDG_CACHE_HOME=/tmp/dsaverse-vercel-cache npx vercel --prod
+```
+
+Use a single deployment path; if the Git import already deployed the latest `main`, inspect and verify that deployment instead of running another production deploy. Do not commit `.vercel` state or paste tokens into source or chat.

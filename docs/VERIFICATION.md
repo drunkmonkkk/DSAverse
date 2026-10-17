@@ -20,3 +20,9 @@ The dashboard screenshot was visually reviewed. Browser tests found an overly br
 Limits: tests do not establish live Supabase authentication/email delivery or production deployment, nor all browser engines, all input combinations, complete accessibility conformance, or live validity of external problem links. The full curriculum and six-language example expansion remain in TASKS.md.
 
 Reusable install/start instructions were saved as an environment configuration draft. The tool confirmed `status: saved` and `requires_publish: true`. Review/save settings and publish the environment to activate that draft. Fresh-task restoration has not been independently tested. Source is not pushed to the remote repository.
+
+## Publication follow-up
+
+The MVP was committed locally as `0fc15c0`. Follow-up changes add dedicated auth routes, password recovery/update UI, Shiki highlighting and copying, Open Graph image, icon, robots/sitemap, route loading UI, GitHub Actions and Vercel build settings. TypeScript, lint, 48 unit/database tests and the production build passed after these changes. Expanded browser results are recorded below after completion.
+
+Vercel CLI 64.5.0 reports `Logged out`. A direct proxied request to `https://api.vercel.com/v2/user` received HTTP 403 during CONNECT. No Vercel credentials or integration are configured. The environment draft now includes api.vercel.com, vercel.com and *.vercel.app; the saved change requires publishing. This is a network/authentication blocker, not a failed application build. No Vercel project or production URL has been created or verified.

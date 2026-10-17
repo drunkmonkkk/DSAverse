@@ -18,11 +18,13 @@ This checkout was rebuilt after the cloud workspace was replaced and the earlier
 
 - [ ] Expand all concise lessons into detailed tutorials, worked dry runs, diagrams, and topic-specific mistake/complexity discussions.
 - [ ] Replace shared array code references with topic-specific implementations. Current distinct examples: array traversal and binary search in Python, JavaScript, TypeScript, Java, C++, and C (12 snippets total).
-- [ ] Syntax highlighting, copy-code controls, and additional code-language reference families.
+- [x] Shiki syntax highlighting and copy-code controls.
+- [ ] Additional topic-specific code-language reference families.
 - [ ] Fully synchronized pseudocode for the remaining visualizers; current dedicated pseudocode covers binary search, bubble sort, and fixed sliding window.
 - [ ] Improve structural animation and graph layout; current labs use immediate immutable frames and fixed-position SVG diagrams.
 - [ ] Add an editable tree shape, arbitrary linked-list operations across a session, custom knapsack weights in the UI, and more specialized input controls.
-- [ ] Rich onboarding, server-enforced private account routes, password recovery, OAuth, and confirmation callbacks.
+- [x] Dedicated login/signup routes and password recovery/update UI (live verification pending).
+- [ ] Rich onboarding, server-enforced private account routes, OAuth, and custom confirmation callbacks.
 - [ ] Guest-to-account import and multi-device conflict reconciliation; currently stores are separate and conflicting writes pause.
 - [ ] Expand analytics breakdowns, search/pattern filters, and planner scheduling beyond the current daily list.
 - [ ] Validate external problem links live and run the code references with all six language toolchains.
@@ -35,3 +37,10 @@ This checkout was rebuilt after the cloud workspace was replaced and the earlier
 - Database tests use the actual migration in PGlite; no live Supabase project was contacted.
 - Browser tests cover local persistence, prerequisites, notes, bookmarks, statuses, revisions, visualizer input errors/steps, route rendering, responsive widths, graph rendering and navigation.
 - This MVP does not run user-submitted code, verify external solutions, or offer a public competitive leaderboard.
+
+## Deployment preparation
+
+- [x] Open Graph image/metadata, SVG favicon, robots.txt, sitemap.xml and route loading UI.
+- [x] GitHub Actions quality workflow and Vercel framework/build configuration.
+- [ ] Connect the account-side Vercel Git integration and verify public production.
+- [ ] Normalize cloud progress into the requested profiles/topic_progress/problem_progress/bookmarks/study_sessions/activity_events/user_goals/user_achievements tables. The MVP currently stores private progress as a versioned user_state JSON document; public topics/problems have separate tables.
