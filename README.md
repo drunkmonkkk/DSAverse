@@ -52,7 +52,11 @@ On a conflict or save failure, export current progress before reloading. Cloud w
 
 Import the repository into Vercel, select the Next.js preset, and use Node 24. Install with `npm ci`, build with `npm run build`, and let the platform detect the output. Local learning works without environment variables; set the two public Supabase variables before building to enable cloud mode. Apply the migration separately and configure the Auth Site URL. Do not expose the service-role key to the deployment unless a future server-only feature explicitly requires it.
 
-A self-hosted deployment can run `npm run build` followed by `npm run start` behind an HTTPS reverse proxy. No deployment has been performed, and no public deployment URL is claimed.
+A self-hosted deployment can run `npm run build` followed by `npm run start` behind an HTTPS reverse proxy.
+
+## Live deployment
+
+DSAverse is deployed in functional local-persistence mode at [https://dsaverse-jade.vercel.app](https://dsaverse-jade.vercel.app). The production deployment is built from commit `5aa44065220c6bb517b5cc5b27eade5e70af7d4a` on `main` and was verified by HTTP and browser checks on desktop and mobile. Supabase has not been configured, so sign-in and cloud synchronization remain unavailable while local progress stays functional.
 
 ## Cloud workspace recovery
 
@@ -60,7 +64,7 @@ A self-hosted deployment can run `npm run build` followed by `npm run start` beh
 
 ## Git and Vercel delivery
 
-GitHub Actions runs lint, type checking, unit/database tests, production build and browser tests on pushes to `main` and pull requests. It does not deploy: use Vercel's Git integration once connected to avoid duplicate deployments.
+GitHub Actions runs lint, type checking, unit/database tests, production build and browser tests on pushes to `main` and pull requests. It does not deploy by itself. The current Vercel project deployment was created with the CLI; connecting Vercel's GitHub integration is still required for automatic production deployments from `main` and previews for pull requests.
 
 In the authenticated Vercel account, import `drunkmonkkk/DSAverse`, name the project `dsaverse`, retain the repository root as Root Directory, choose Next.js and Node 24, and set Production Branch to `main`. Vercel's integration supplies production deployments for `main` and preview deployments for pull requests. The committed `vercel.json` sets the framework/install/build commands but cannot create the account-side Git integration.
 

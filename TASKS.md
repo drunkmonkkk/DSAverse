@@ -28,8 +28,8 @@ This checkout was rebuilt after the cloud workspace was replaced and the earlier
 - [ ] Guest-to-account import and multi-device conflict reconciliation; currently stores are separate and conflicting writes pause.
 - [ ] Expand analytics breakdowns, search/pattern filters, and planner scheduling beyond the current daily list.
 - [ ] Validate external problem links live and run the code references with all six language toolchains.
-- [ ] Live Supabase authentication, email, persistence and deployment smoke tests (project credentials/deployment target not supplied).
-- [ ] Production deployment and independent fresh-environment restoration test.
+- [ ] Live Supabase authentication, email, and cloud-persistence smoke tests (project credentials not supplied).
+- [x] Production deployment smoke tests on desktop and mobile at https://dsaverse-jade.vercel.app.
 
 ## Current verification
 
@@ -42,5 +42,5 @@ This checkout was rebuilt after the cloud workspace was replaced and the earlier
 
 - [x] Open Graph image/metadata, SVG favicon, robots.txt, sitemap.xml and route loading UI.
 - [x] GitHub Actions quality workflow and Vercel framework/build configuration.
-- [ ] Connect the account-side Vercel Git integration and verify public production.
+- [ ] Connect the account-side Vercel Git integration for automatic main/PR deployments. The live deployment is verified; Vercel rejected repository connection because the active Vercel team lacks GitHub repository access.
 - [ ] Normalize cloud progress into the requested profiles/topic_progress/problem_progress/bookmarks/study_sessions/activity_events/user_goals/user_achievements tables. The MVP currently stores private progress as a versioned user_state JSON document; public topics/problems have separate tables.
